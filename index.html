@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валентинка Doctoreta 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 30%, #ffcccc, #ffb6c1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto; /* вертикальная прокрутка для всей страницы */
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            margin: auto; /* центрирование по вертикали при прокрутке */
+        }
+
+        .envelope {
+            background: #fff0f5;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transition: transform 0.5s;
+            border: 3px solid white;
+            text-align: center;
+        }
+
+        .envelope.closed {
+            cursor: pointer;
+        }
+
+        .envelope.closed:hover {
+            transform: scale(1.02);
+            box-shadow: 0 35px 50px rgba(255, 105, 180, 0.3);
+        }
+
+        .envelope.closed .closed-content {
+            display: block;
+        }
+
+        .envelope.closed .opened-content {
+            display: none;
+        }
+
+        .envelope.opened .closed-content {
+            display: none;
+        }
+
+        .envelope.opened .opened-content {
+            display: block;
+        }
+
+        .closed-content {
+            padding: 20px;
+        }
+
+        .closed-content h2 {
+            color: #d43f6b;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .closed-content p {
+            color: #b3436b;
+            font-size: 1.3rem;
+            margin: 20px 0;
+        }
+
+        .big-heart {
+            font-size: 8rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 10px 15px rgba(255, 0, 0, 0.3));
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+        }
+
+        .open-btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.4rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
+            margin-top: 30px;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.6);
+        }
+
+        .open-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Открытая валентинка */
+        .opened-content {
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffb6c1, #ffc0cb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid white;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-placeholder {
+            font-size: 5rem;
+        }
+
+        /* Блок сообщения с прокруткой */
+        .message {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-height: 800px;         /* фиксированная высота, при превышении — скролл */
+            overflow-y: auto;
+            text-align: left;
+            scrollbar-width: thin;
+            scrollbar-color: #ffb6c1 #f0f0f0;
+        }
+
+        .message::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .message::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .message::-webkit-scrollbar-thumb {
+            background: #ffb6c1;
+            border-radius: 10px;
+        }
+
+        .message::-webkit-scrollbar-thumb:hover {
+            background: #ff8da1;
+        }
+
+        .message h1 {
+            color: #d43f6b;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .message p {
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .signature {
+            font-style: italic;
+            color: #ff69b4;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .float-heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.3);
+            font-size: 20px;
+            animation: float-around 15s linear infinite;
+        }
+
+        @keyframes float-around {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0 10px;
+        }
+
+        .option-btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .option-btn.yes {
+            background: #ff4d6d;
+            color: white;
+            box-shadow: 0 5px 15px #ff4d6d;
+        }
+
+        .option-btn.yes:hover {
+            transform: scale(1.1);
+            background: #ff3355;
+        }
+
+        .option-btn.no {
+            background: #f0f0f0;
+            color: #999;
+            position: relative;
+        }
+
+        .surprise-message {
+            font-size: 2rem;
+            color: #ff1493;
+            margin-top: 20px;
+            animation: pop 0.5s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <div class="container">
+        <div class="envelope closed" id="envelope" onclick="openEnvelope()">
+            <!-- Закрытая валентинка -->
+            <div class="closed-content">
+                <h2>💌 Ой, кажется тебе валентинка!</h2>
+                <div class="big-heart">❤️</div>
+                <p>Нажми, чтобы прочитать</p>
+                <button class="open-btn" onclick="event.stopPropagation(); openEnvelope()">Открыть валентинку 💕</button>
+            </div>
+            
+            <!-- Открытая валентинка -->
+            <div class="opened-content">
+                <div class="photo-frame">
+                    <div class="photo-placeholder">🥰</div>
+                </div>
+                
+                <!-- Блок сообщения с прокруткой (теперь здесь много текста) -->
+                <div class="message">
+                    <h1>С днём Святого Валентина!</h1>
+                    <p>"Женушка" ахахах, надеюсь наше общение будет теплым и дружелюбным <3 </p>
+                    <p>Чаще улыбайся, побольше говори "потому что" и "то что"</p>
+                    <p>Очень хочу, что бы у тебя было все спокойно в жизни, как море ш рыпками в штиль</p>
+                    <div class="signature">Твой друг Лева :P</div>
+                </div>
+                
+                <h2 style="color: #d43f6b; margin: 20px 0;">Ты согласна принять валентинку?</h2>
+                
+                <div class="options">
+                    <button class="option-btn yes" onclick="sayYes(event)">ДА! 💖</button>
+                    <button class="option-btn no" id="noBtn" onmouseover="moveButton()" onclick="sayNo(event)">Нет 😢</button>
+                </div>
+                
+                <div id="responseMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.remove('closed');
+            envelope.classList.add('opened');
+            createConfetti(30);
+            
+            // Добавляем плавающие сердца при открытии
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 200);
+            }
+        }
+
+        function sayYes(event) {
+            event.stopPropagation();
+            const responseDiv = document.getElementById('responseMessage');
+            responseDiv.innerHTML = '<div class="surprise-message">🎉 УРА! Я ТАК СЧАСТЛИВ! 🎉</div>';
+            createConfetti(100);
+            
+            // Создаём много сердечек
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 30);
+            }
+        }
+
+        function sayNo(event) {
+            event.stopPropagation();
+            const responseDiv = document.getElementById('responseMessage');
+            responseDiv.innerHTML = '<div class="surprise-message">😭 Попробуй ещё раз!</div>';
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - 200;
+            const maxY = window.innerHeight - 200;
+            
+            // Случайные координаты в пределах видимой области
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '9999';
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'float-heart';
+            heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜'][Math.floor(Math.random() * 6)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.fontSize = (Math.random() * 30 + 15) + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+
+        function createConfetti(count) {
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Создаём фоновые сердечки при загрузке
+        window.onload = function() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 300);
+            }
+        };
+    </script>
+</body>
+</html>
